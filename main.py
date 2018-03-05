@@ -4,29 +4,18 @@ import requests
 
 
 def get_tree(url):
-    # url = 'http://freedesignfile.com/category/free-vector/'
     request = urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     response = urllib2.urlopen(request)
     htmlparser = etree.HTMLParser()
     tree = etree.parse(response, htmlparser)
     return tree
 
-def get_xml(url):
-    request = urllib2.Request(url)
-    response = urllib2.urlopen(request)
-    # xmlparser = etree.XMLParser()
-    tree = etree.parse(response)
-    return tree
 
 xtree = get_tree('https://staterecords.org/sitemap1.xml')
 urls = [el.text for el in xtree.xpath('//loc')]
 print len(urls)
 no_repeats = list(set(urls))
 print len(no_repeats)
-# with open('results.txt', 'a+') as output:
-#     output.write('lorem ipsum')
-print 'done'
-print 'af'
 with open('results.txt', 'a+') as output:
     for index, item in enumerate(no_repeats):
         print index,
@@ -48,11 +37,3 @@ with open('results.txt', 'a+') as output:
         except:
             print 'REQUEST ERROR'
             output.write(item + '"' + 'REQUEST ERROR')
-
-    # print item
-# for index, url in enumerate(urls):
-#     print index
-#     print url.text
-    # print loc.text
-# print 'hol'
-
